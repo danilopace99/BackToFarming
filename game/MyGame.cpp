@@ -20,25 +20,64 @@ void CMyGame::OnUpdate()
 	Uint32 t = GetTime();
 
 	// TODO: add the game update code here
+
+	player.Update(t);
+
+	bg.Update(t);
+
+#pragma region endworld test
+	
+#pragma endregion
+
+	/*TODO: scroll screen
+	if (player.GetX() > 10 && player.GetX() < 200)
+	{
+		(not done) bg.SetScrollPos(-player.GetX(), -player.GetY())
+	}*/
+	PlayerControl();
+}
+
+void CMyGame::PlayerControl()
+{
+
+	//player's movement
 	if (IsKeyDown(SDLK_LEFT)) player.SetMotion(-400, 0);
 	else if (IsKeyDown(SDLK_RIGHT)) player.SetMotion(400, 0);
 	else if (IsKeyDown(SDLK_UP)) player.SetMotion(0, 400);
 	else if (IsKeyDown(SDLK_DOWN)) player.SetMotion(0, -400);
 	else player.SetMotion(0, 0);
 	
+
 }
 
 void CMyGame::OnDraw(CGraphics* g)
 {
 	// TODO: add drawing code here
-	if (bg.GetY() <= 0) 
+	if (bg.GetY() <= 0)
 	{
 		bg.SetX(540);
 		bg.SetY(240);
 	}
 	bg.Draw(g);
 
+	for (CSprite* pSprite : m_sprites)
+	{
+		//end of the game world
+		pSprite = new CSpriteRect(-10, 300, 20, 1200, CColor::Black(), CColor::White(), GetTime());
+		pSprite->SetProperty("tag", "platform");
+		m_sprites.push_back(pSprite);
+
+		pSprite = new CSpriteRect(1090, 300, 20, 1200, CColor::Black(), CColor::White(), GetTime());
+		pSprite->SetProperty("tag", "platform");
+		m_sprites.push_back(pSprite);
+
+		pSprite->Draw(g);
+	}
+
 	player.Draw(g);
+
+
+
 	
 }
 
@@ -67,6 +106,13 @@ void CMyGame::OnDisplayMenu()
 // as a second phase after a menu or a welcome screen
 void CMyGame::OnStartGame()
 {
+
+	// Clean up first
+	for (CSprite* pSprite : m_sprites)
+		delete pSprite;
+	m_sprites.clear();
+
+
 	player.SetPosition(540, 350);
 
 }
