@@ -3,7 +3,8 @@
 class CMyGame : public CGame
 {
 	// Define sprites and other instance variables here
-	
+	CSprite bg;
+	CSprite player;
 
 public:
 	CMyGame(void);

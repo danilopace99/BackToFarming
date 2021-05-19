@@ -20,14 +20,25 @@ void CMyGame::OnUpdate()
 	Uint32 t = GetTime();
 
 	// TODO: add the game update code here
+	if (IsKeyDown(SDLK_LEFT)) player.SetMotion(-400, 0);
+	else if (IsKeyDown(SDLK_RIGHT)) player.SetMotion(400, 0);
+	else if (IsKeyDown(SDLK_UP)) player.SetMotion(0, 400);
+	else if (IsKeyDown(SDLK_DOWN)) player.SetMotion(0, -400);
+	else player.SetMotion(0, 0);
 	
 }
 
 void CMyGame::OnDraw(CGraphics* g)
 {
 	// TODO: add drawing code here
-	
+	if (bg.GetY() <= 0) 
+	{
+		bg.SetX(540);
+		bg.SetY(240);
+	}
+	bg.Draw(g);
 
+	player.Draw(g);
 	
 }
 
@@ -37,6 +48,12 @@ void CMyGame::OnDraw(CGraphics* g)
 // one time initialisation
 void CMyGame::OnInitialize()
 {
+
+	player.LoadImage("pg.png");
+	player.SetImage("pg.png");
+
+	bg.LoadImage("bg.png");
+	bg.SetImage("bg.png");
 }
 
 // called when a new game is requested (e.g. when F2 pressed)
@@ -50,6 +67,8 @@ void CMyGame::OnDisplayMenu()
 // as a second phase after a menu or a welcome screen
 void CMyGame::OnStartGame()
 {
+	player.SetPosition(540, 350);
+
 }
 
 // called when a new level started - first call for nLevel = 1
