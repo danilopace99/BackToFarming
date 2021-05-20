@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class plant
+class Cplant
 {
 protected:
 	string type;
@@ -12,6 +12,14 @@ protected:
 	int ammountWater;
 
 public:
+
+	Cplant(string Ntype, int NgrowTime, int NcomplteteGrowTime, int NammountWater)
+	{
+		type = Ntype;
+		growTime = NgrowTime;
+		complteteGrowTime = NcomplteteGrowTime;
+		ammountWater = NammountWater;
+	}
 
 	//setters
 	void setType(string Ntype)
@@ -53,3 +61,11 @@ public:
 		return ammountWater;
 	}
 };
+
+int getCompleteGrowtime(string type)
+{
+	if (type == "")
+	{
+		return 100;
+	}
+}

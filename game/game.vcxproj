@@ -91,7 +91,9 @@
     <ClCompile Include="MyGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dirt.h" />
     <ClInclude Include="MyGame.h" />
+    <ClInclude Include="Plant.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
