@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
 	//app.OpenFullScreen(800, 600, 24);
 	//app.OpenConsole();
 	app.SetClearColor(CColor::Black());
+	app.SetFPS(30);
 	app.Run(&game);
 	return(0);
 }
