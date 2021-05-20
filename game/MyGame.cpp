@@ -39,13 +39,27 @@ void CMyGame::OnUpdate()
 
 void CMyGame::PlayerControl()
 {
-
 	//player's movement
-	if (IsKeyDown(SDLK_LEFT)) player.SetMotion(-400, 0);
-	else if (IsKeyDown(SDLK_RIGHT)) player.SetMotion(400, 0);
-	else if (IsKeyDown(SDLK_UP)) player.SetMotion(0, 400);
-	else if (IsKeyDown(SDLK_DOWN)) player.SetMotion(0, -400);
-	else player.SetMotion(0, 0);
+	if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_a))
+	{
+		player.SetMotion(-400, 0);
+	}
+	else if (IsKeyDown(SDLK_RIGHT) || IsKeyDown(SDLK_d))
+	{ 
+		player.SetMotion(400, 0); 
+	}
+	else if (IsKeyDown(SDLK_UP) || IsKeyDown(SDLK_w))
+	{
+		player.SetMotion(0, 400);
+	}
+	else if (IsKeyDown(SDLK_DOWN) || IsKeyDown(SDLK_s))
+	{
+		player.SetMotion(0, -400);
+	}
+	else
+	{
+		player.SetMotion(0, 0);
+	}
 	
 
 }
@@ -128,7 +142,7 @@ void CMyGame::OnStartGame()
 	m_sprites.clear();
 
 
-	player.SetPosition(540, 350);
+	player.SetPosition(GetWidth()/2, GetHeight()/2);
 
 }
 
