@@ -12,19 +12,28 @@ protected:
 public:
 
 	//methods
+	void eachframe()
+	{
+		if (plant != NULL)
+		{
+			agePlant();
+		}
+	}
+
 	void agePlant()
 	{
 		plant->setGrowTime(plant->getGrowTime() + 1);
+		plant->setAmmountWater(plant->getAmmountWater() - 1);
 	}
 
 	void waterPlant()
 	{
-		plant->setAmmountWater(plant->getAmmountWater() + 20);
+		plant->setAmmountWater(plant->getAmmountWater() + 1800);
 	}
 
 	void plantPlant(string type)
 	{
-		Cplant* Nplant = new Cplant(type, 0, getCompleteGrowtime(type) ,100)
+		Cplant* Nplant = new Cplant(type, 0, getCompleteGrowtime(type), 1800);
 		plant = Nplant;
 	}
 
