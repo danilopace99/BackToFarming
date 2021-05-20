@@ -4,8 +4,11 @@ class CMyGame : public CGame
 {
 	// Define sprites and other instance variables here
 	CSprite bg;
+	CSprite lv1sky;
 	CSprite bgscroller;
 	CSprite player;
+	CSprite doctor;
+	CSprite console;
 
 	CSprite car;
 	CSprite carMenu;
@@ -16,8 +19,11 @@ class CMyGame : public CGame
 
 	CSpriteList m_sprites;	// All other sprites
 
+	
+
 	//functions
 	CVector mousetoscreen(float x, float y);
+	
 	void level1code();
 
 public:
@@ -33,7 +39,9 @@ public:
 
 	// ---- member functions ----
 	void PlayerControl();
+	void DoctorControl();
 	void CarControl();
+	void ConsoleControl();
 
 	void SetupLevel1();
 	void SetupLevel2();

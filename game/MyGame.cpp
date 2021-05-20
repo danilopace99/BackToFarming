@@ -21,9 +21,10 @@ void CMyGame::OnUpdate()
 
 	// TODO: add the game update code here
 
-	player.Update(t);
+	
 	bg.Update(t);
 	bgscroller.Update(t);
+
 
 	if (level == 1) 
 	{ 
@@ -41,6 +42,8 @@ void CMyGame::OnUpdate()
 	PlayerControl();
 
 	CarControl();
+
+	m_sprites.delete_if(deleted);
 }
 
 void CMyGame::PlayerControl()
@@ -67,7 +70,21 @@ void CMyGame::PlayerControl()
 		player.SetMotion(0, 0);
 	}
 
-
+	//player collisions with car, doctor, console
+	CSpriteRect a(800, 600, 40, 40, CColor::Black(), CColor::White(), GetTime());
+	CSpriteRect b(800, GetHeight() / 4, 40, 40, CColor::Black(), CColor::White(), GetTime());
+	CSpriteRect c(GetWidth() / 4, 600, 40, 40, CColor::Black(), CColor::White(), GetTime());
+	CVector pos = player.GetPos();
+	player.Update(GetTime());
+	if (player.GetY() < -120 || player.GetY() > 900 || player.GetX() < 0 || player.GetX() > 1080)
+	{
+		player.SetPosition(pos);
+	}
+	if (level == 0)
+	{
+		if (player.HitTest(&a) || player.HitTest(&b) || player.HitTest(&c))
+			player.SetPosition(pos);
+	}
 }
 
 void CMyGame::CarControl()
@@ -86,6 +103,21 @@ void CMyGame::CarControl()
 		carrots.SetPosition(7000, 7000);
 		potatoes.SetPosition(7000, 7000);
 		tomatoes.SetPosition(7000, 7000);
+	}
+}
+
+void CMyGame::ConsoleControl()
+{
+	if (player.HitTest(&console) && IsKeyDown(SDLK_t))
+	{
+		//water plants
+	}
+}
+void CMyGame::DoctorControl()
+{
+	if (player.HitTest(&doctor) && IsKeyDown(SDLK_t))
+	{
+		//speak with doctor
 	}
 }
 
@@ -113,6 +145,9 @@ void CMyGame::OnDraw(CGraphics* g)
 
 		car.Draw(g);
 
+		doctor.Draw(g);
+		console.Draw(g);
+
 		carMenu.Draw(g);
 		carrots.Draw(g);
 		potatoes.Draw(g);
@@ -122,6 +157,7 @@ void CMyGame::OnDraw(CGraphics* g)
 	if (level == 1)
 	{
 		bgscroller.Draw(g);
+		for (CSprite* enemy : m_sprites) enemy->Draw(g);
 	}
 	if (level == 2)
 	{
@@ -151,10 +187,20 @@ void CMyGame::OnInitialize()
 	bg.SetImage("bg.png");
 	bg.SetPosition(GetWidth() / 2, GetHeight() / 2);
 
-	//car setup
+	//setup
 	car.LoadImage("car.png");
 	car.SetImage("car.png");
-	car.SetPosition(800, GetHeight() / 4);
+	car.SetPosition(800, 600);
+
+	doctor.LoadImage("doc.png");
+	doctor.SetImage("doc.png");
+	doctor.SetPosition(800, GetHeight() / 4);
+	
+	console.LoadImage("console.png");
+	console.SetImage("console.png");
+	console.SetPosition(GetWidth() / 4, 600);
+
+	
 
 	//travel menu
 	carMenu.LoadImage("carMenu.png");
@@ -171,6 +217,7 @@ void CMyGame::OnInitialize()
 
 	bgscroller.LoadImage("bg1.png");
 	bgscroller.SetImage("bg1.png");
+
 }
 
 // called when a new game is requested (e.g. when F2 pressed)
@@ -308,8 +355,40 @@ CVector CMyGame::mousetoscreen(float x, float y)
 
 void CMyGame::level1code()
 {
-	if (bgscroller.GetY() < 0)
-		bgscroller.SetY(GetWidth() / 2);
+	for (CSprite* enemy : m_sprites)
+	{
+		if (bgscroller.GetY() < -4000)
+		{
+			enemy->Delete();
+			bgscroller.SetPosition(540, 4830);
+			player.SetPosition(GetWidth() / 2, GetHeight() / 2);
+			level = 0;
+		}
+	}
 
 	bgscroller.SetMotion(0, -100);
+
+	// enemy spawn from the right side   
+	if (rand() % 80 == 0) {
+		CSprite* newSprite = new CSprite(float(rand() % 1080), 768, "obstacle.png", CColor::White(), GetTime());
+		newSprite->SetDirection(0, -100.f);
+		newSprite->SetSpeed(75);
+		m_sprites.push_back(newSprite);
+	}
+
+	for (CSprite* enemy : m_sprites)
+	{
+		// collision with player
+		if (enemy->HitTest(&player)) {
+			enemy->Delete();
+		}
+	}
+
+	for (CSprite* enemy : m_sprites)
+	{
+		if (enemy->GetY() < 0 || enemy->GetX() < 0)
+		{
+			enemy->Delete();
+		}
+	}
 }
