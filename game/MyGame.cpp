@@ -71,9 +71,9 @@ void CMyGame::PlayerControl()
 	}
 
 	//player collisions with car, doctor, console
-	CSpriteRect a(800, 600, 40, 40, CColor::Black(), CColor::White(), GetTime());
-	CSpriteRect b(800, GetHeight() / 4, 40, 40, CColor::Black(), CColor::White(), GetTime());
-	CSpriteRect c(GetWidth() / 4, 600, 40, 40, CColor::Black(), CColor::White(), GetTime());
+	CSpriteRect a(800, 600, 30, 30, CColor::Black(), CColor::White(), GetTime());
+	CSpriteRect b(800, GetHeight() / 4, 30, 30, CColor::Black(), CColor::White(), GetTime());
+	CSpriteRect c(GetWidth() / 4, 600, 30, 30, CColor::Black(), CColor::White(), GetTime());
 	CVector pos = player.GetPos();
 	player.Update(GetTime());
 	if (player.GetY() < -120 || player.GetY() > 900 || player.GetX() < 0 || player.GetX() > 1080)
