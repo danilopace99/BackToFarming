@@ -198,6 +198,9 @@ void CMyGame::OnMButtonUp(Uint16 x,Uint16 y)
 {
 }
 
+////////////////////////////////////////////
+//game functions
+
 CVector CMyGame::mousetoscreen(float x, float y)
 {
 	//find the mouse pos based on the screen movement
