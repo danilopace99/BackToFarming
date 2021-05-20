@@ -8,6 +8,9 @@ class CMyGame : public CGame
 
 	CSpriteList m_sprites;	// All other sprites
 
+	//functions
+	CVector mousetoscreen(float x, float y);
+
 public:
 	CMyGame(void);
 	~CMyGame(void);

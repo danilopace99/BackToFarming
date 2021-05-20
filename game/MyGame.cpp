@@ -102,9 +102,10 @@ void CMyGame::OnDraw(CGraphics* g)
 // one time initialisation
 void CMyGame::OnInitialize()
 {
-
+	//player setup
 	player.LoadImage("pg.png");
 	player.SetImage("pg.png");
+	player.SetPosition(GetWidth() / 2, GetHeight() / 2);
 
 	//background setup
 	bg.LoadImage("bg.png");
@@ -131,7 +132,6 @@ void CMyGame::OnStartGame()
 
 
 	player.SetPosition(GetWidth()/2, GetHeight()/2);
-
 }
 
 // called when a new level started - first call for nLevel = 1
@@ -196,4 +196,13 @@ void CMyGame::OnMButtonDown(Uint16 x,Uint16 y)
 
 void CMyGame::OnMButtonUp(Uint16 x,Uint16 y)
 {
+}
+
+CVector CMyGame::mousetoscreen(float x, float y)
+{
+	//find the mouse pos based on the screen movement
+	CVector mousepos = CVector(x, y);
+	CVector cornerscreen = CVector(player.GetX() - (GetWidth() / 2), player.GetY() - (GetHeight() / 2));
+	mousepos = cornerscreen + mousepos;
+	return mousepos;
 }
