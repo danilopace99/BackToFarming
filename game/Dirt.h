@@ -37,6 +37,12 @@ public:
 		plant = Nplant;
 	}
 
+	void harvestPlant()
+	{
+
+		plant = NULL;
+	}
+
 	//setters
 	void setPlant(Cplant* Nplant)
 	{
