@@ -22,7 +22,6 @@ void CMyGame::OnUpdate()
 	// TODO: add the game update code here
 
 	player.Update(t);
-
 	bg.Update(t);
 
 	PlayerControl();
@@ -53,19 +52,12 @@ void CMyGame::PlayerControl()
 	{
 		player.SetMotion(0, 0);
 	}
-	
+
 
 }
 
 void CMyGame::CarControl()
 {
-	// hit test player-car
-	CVector pos = player.GetPos();
-	player.Update(GetTime());
-	if (player.HitTest(&car))
-	{
-		//player.SetPosition(pos);	// if an obstacle can't move!
-	}
 	if (player.HitTest(&car) && IsKeyDown(SDLK_t))
 	{
 		carMenu.SetPosition(800, GetHeight() / 2);
