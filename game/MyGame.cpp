@@ -29,11 +29,6 @@ void CMyGame::OnUpdate()
 	
 #pragma endregion
 
-	/*TODO: scroll screen
-	if (player.GetX() > 10 && player.GetX() < 200)
-	{
-		(not done) bg.SetScrollPos(-player.GetX(), -player.GetY())
-	}*/
 	PlayerControl();
 }
 
@@ -82,11 +77,6 @@ void CMyGame::OnDraw(CGraphics* g)
 		g->SetScrollPos((GetWidth() / 2) - (GetWidth() - 10), (GetHeight() / 2) - player.GetY());
 	}
 
-	if (bg.GetY() <= 0)
-	{
-		bg.SetX(540);
-		bg.SetY(240);
-	}
 	bg.Draw(g);
 
 	for (CSprite* pSprite : m_sprites)
@@ -104,10 +94,6 @@ void CMyGame::OnDraw(CGraphics* g)
 	}
 
 	player.Draw(g);
-
-
-
-	
 }
 
 /////////////////////////////////////////////////////
@@ -120,8 +106,10 @@ void CMyGame::OnInitialize()
 	player.LoadImage("pg.png");
 	player.SetImage("pg.png");
 
+	//background setup
 	bg.LoadImage("bg.png");
 	bg.SetImage("bg.png");
+	bg.SetPosition(GetWidth() / 2, GetHeight() / 2);
 }
 
 // called when a new game is requested (e.g. when F2 pressed)
