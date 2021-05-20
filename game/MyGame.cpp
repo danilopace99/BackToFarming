@@ -23,6 +23,11 @@ void CMyGame::OnUpdate()
 
 	player.Update(t);
 	bg.Update(t);
+	bgscroller.Update(t);
+
+	if (level == 1) { SetupLevel1(); bgscroller.SetMotion(0, -100); }
+	if (level == 2) SetupLevel2();
+	if (level == 3) SetupLevel3();
 
 	PlayerControl();
 
@@ -94,16 +99,31 @@ void CMyGame::OnDraw(CGraphics* g)
 		g->SetScrollPos((GetWidth() / 2) - (GetWidth() - 10), (GetHeight() / 2) - player.GetY());
 	}
 
-	bg.Draw(g);
+	if (level == 0)
+	{
+		bg.Draw(g);
 
-	car.Draw(g);
+		car.Draw(g);
+
+		carMenu.Draw(g);
+		carrots.Draw(g);
+		potatoes.Draw(g);
+		tomatoes.Draw(g);
+	}
+
+	if (level == 1)
+	{
+		SetupLevel1();
+		// reset background image (which is of size 1080x10000)
+		if (bgscroller.GetY() < 0)
+			bgscroller.SetY(GetWidth() / 2);
+		bgscroller.Draw(g);
+
+	}
+	if (level == 2) SetupLevel2();
+	if (level == 3) SetupLevel3();
 
 	player.Draw(g);
-
-	carMenu.Draw(g);
-	carrots.Draw(g);
-	potatoes.Draw(g);
-	tomatoes.Draw(g);
 }
 
 /////////////////////////////////////////////////////
@@ -139,6 +159,9 @@ void CMyGame::OnInitialize()
 
 	tomatoes.LoadImage("tomatoes.png");
 	tomatoes.SetImage("tomatoes.png");
+
+	bgscroller.LoadImage("bg1.png");
+	bgscroller.SetImage("bg1.png");
 }
 
 // called when a new game is requested (e.g. when F2 pressed)
@@ -152,6 +175,7 @@ void CMyGame::OnDisplayMenu()
 // as a second phase after a menu or a welcome screen
 void CMyGame::OnStartGame()
 {
+	level = 0;
 
 	// Clean up first
 	for (CSprite* pSprite : m_sprites)
@@ -160,6 +184,10 @@ void CMyGame::OnStartGame()
 
 
 	player.SetPosition(GetWidth()/2, GetHeight()/2);
+
+	// background is of size 1080x10000
+	bgscroller.SetPosition(540, 4830);
+	bgscroller.SetMotion(0, 0);
 }
 
 // called when a new level started - first call for nLevel = 1
@@ -167,6 +195,18 @@ void CMyGame::OnStartLevel(Sint16 nLevel)
 {
 }
 
+// called at the beginning of level
+void CMyGame::SetupLevel1()
+{
+}
+void CMyGame::SetupLevel2()
+{
+
+}
+void CMyGame::SetupLevel3()
+{
+
+}
 // called when the game is over
 void CMyGame::OnGameOver()
 {
@@ -204,14 +244,18 @@ void CMyGame::OnMouseMove(Uint16 x,Uint16 y,Sint16 relx,Sint16 rely,bool bLeft,b
 
 void CMyGame::OnLButtonDown(Uint16 x,Uint16 y)
 {
-	if (carrots.HitTest(x, y))
+	if (carrots.HitTest(mousetoscreen(x, y)))
 	{
+		player.SetPosition(GetWidth() / 2, GetHeight() / 2);
+		level = 1;
 	}
-	if (potatoes.HitTest(x, y))
+	if (potatoes.HitTest(mousetoscreen(x, y)))
 	{
+		level = 2;
 	}
-	if (tomatoes.HitTest(x, y))
+	if (tomatoes.HitTest(mousetoscreen(x, y)))
 	{
+		level = 3;
 	}
 }
 

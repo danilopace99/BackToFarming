@@ -4,6 +4,7 @@ class CMyGame : public CGame
 {
 	// Define sprites and other instance variables here
 	CSprite bg;
+	CSprite bgscroller;
 	CSprite player;
 
 	CSprite car;
@@ -26,9 +27,16 @@ public:
 	virtual void OnUpdate();
 	virtual void OnDraw(CGraphics* g);
 
+	// ---- variables ----
+	int level;
+
 	// ---- member functions ----
 	void PlayerControl();
 	void CarControl();
+
+	void SetupLevel1();
+	void SetupLevel2();
+	void SetupLevel3();
 
 	// Game Life Cycle
 	virtual void OnInitialize();
