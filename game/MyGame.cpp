@@ -53,6 +53,21 @@ void CMyGame::PlayerControl()
 void CMyGame::OnDraw(CGraphics* g)
 {
 	// TODO: add drawing code here
+	
+	//scrolling to the sides code
+	if (player.GetX() > 10 && player.GetX() < (GetWidth()-10))
+	{
+		g->SetScrollPos((GetWidth()/2)-player.GetX(), (GetHeight()/2)-player.GetY());
+	}
+	else if (player.GetX() < 10)
+	{
+		g->SetScrollPos((GetWidth() / 2) - 10, (GetHeight() / 2) - player.GetY());
+	}
+	else if (player.GetX() > (GetWidth() - 10))
+	{
+		g->SetScrollPos((GetWidth() / 2) - (GetWidth() - 10), (GetHeight() / 2) - player.GetY());
+	}
+
 	if (bg.GetY() <= 0)
 	{
 		bg.SetX(540);
