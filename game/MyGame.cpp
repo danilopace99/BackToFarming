@@ -25,10 +25,6 @@ void CMyGame::OnUpdate()
 
 	bg.Update(t);
 
-#pragma region endworld test
-	
-#pragma endregion
-
 	PlayerControl();
 }
 
@@ -78,20 +74,6 @@ void CMyGame::OnDraw(CGraphics* g)
 	}
 
 	bg.Draw(g);
-
-	for (CSprite* pSprite : m_sprites)
-	{
-		//end of the game world
-		pSprite = new CSpriteRect(-10, 300, 20, 1200, CColor::Black(), CColor::White(), GetTime());
-		pSprite->SetProperty("tag", "platform");
-		m_sprites.push_back(pSprite);
-
-		pSprite = new CSpriteRect(1090, 300, 20, 1200, CColor::Black(), CColor::White(), GetTime());
-		pSprite->SetProperty("tag", "platform");
-		m_sprites.push_back(pSprite);
-
-		pSprite->Draw(g);
-	}
 
 	player.Draw(g);
 }
