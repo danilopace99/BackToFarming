@@ -6,6 +6,13 @@ class CMyGame : public CGame
 	CSprite bg;
 	CSprite player;
 
+	CSprite car;
+	CSprite carMenu;
+
+	CSprite carrots;
+	CSprite potatoes;
+	CSprite tomatoes;
+
 	CSpriteList m_sprites;	// All other sprites
 
 	//functions
@@ -21,6 +28,7 @@ public:
 
 	// ---- member functions ----
 	void PlayerControl();
+	void CarControl();
 
 	// Game Life Cycle
 	virtual void OnInitialize();

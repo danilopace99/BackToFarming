@@ -26,6 +26,8 @@ void CMyGame::OnUpdate()
 	bg.Update(t);
 
 	PlayerControl();
+
+	CarControl();
 }
 
 void CMyGame::PlayerControl()
@@ -55,6 +57,33 @@ void CMyGame::PlayerControl()
 
 }
 
+void CMyGame::CarControl()
+{
+	// hit test player-car
+	CVector pos = player.GetPos();
+	player.Update(GetTime());
+	if (player.HitTest(&car))
+	{
+		//player.SetPosition(pos);	// if an obstacle can't move!
+	}
+	if (player.HitTest(&car) && IsKeyDown(SDLK_t))
+	{
+		carMenu.SetPosition(800, GetHeight() / 2);
+		carrots.SetPosition(650, 320);
+		potatoes.SetPosition(800, 320);
+		tomatoes.SetPosition(950, 320);
+
+	}
+	if (!player.HitTest(&car))
+	{
+		carMenu.SetPosition(7000, 7000);
+		carrots.SetPosition(7000, 7000);
+		potatoes.SetPosition(7000, 7000);
+		tomatoes.SetPosition(7000, 7000);
+	}
+
+}
+
 void CMyGame::OnDraw(CGraphics* g)
 {
 	// TODO: add drawing code here
@@ -75,7 +104,14 @@ void CMyGame::OnDraw(CGraphics* g)
 
 	bg.Draw(g);
 
+	car.Draw(g);
+
 	player.Draw(g);
+
+	carMenu.Draw(g);
+	carrots.Draw(g);
+	potatoes.Draw(g);
+	tomatoes.Draw(g);
 }
 
 /////////////////////////////////////////////////////
@@ -93,6 +129,24 @@ void CMyGame::OnInitialize()
 	bg.LoadImage("bg.png");
 	bg.SetImage("bg.png");
 	bg.SetPosition(GetWidth() / 2, GetHeight() / 2);
+
+	//car setup
+	car.LoadImage("car.png");
+	car.SetImage("car.png");
+	car.SetPosition(800, GetHeight() / 4);
+
+	//travel menu
+	carMenu.LoadImage("carMenu.png");
+	carMenu.SetImage("carMenu.png");
+
+	carrots.LoadImage("carrots.png");
+	carrots.SetImage("carrots.png");
+
+	potatoes.LoadImage("potatoes.png");
+	potatoes.SetImage("potatoes.png");
+
+	tomatoes.LoadImage("tomatoes.png");
+	tomatoes.SetImage("tomatoes.png");
 }
 
 // called when a new game is requested (e.g. when F2 pressed)
@@ -158,6 +212,15 @@ void CMyGame::OnMouseMove(Uint16 x,Uint16 y,Sint16 relx,Sint16 rely,bool bLeft,b
 
 void CMyGame::OnLButtonDown(Uint16 x,Uint16 y)
 {
+	if (carrots.HitTest(x, y))
+	{
+	}
+	if (potatoes.HitTest(x, y))
+	{
+	}
+	if (tomatoes.HitTest(x, y))
+	{
+	}
 }
 
 void CMyGame::OnLButtonUp(Uint16 x,Uint16 y)
