@@ -18,6 +18,7 @@ class CMyGame : public CGame
 
 	//functions
 	CVector mousetoscreen(float x, float y);
+	void level1code();
 
 public:
 	CMyGame(void);

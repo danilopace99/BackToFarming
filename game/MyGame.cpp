@@ -25,9 +25,18 @@ void CMyGame::OnUpdate()
 	bg.Update(t);
 	bgscroller.Update(t);
 
-	if (level == 1) { SetupLevel1(); bgscroller.SetMotion(0, -100); }
-	if (level == 2) SetupLevel2();
-	if (level == 3) SetupLevel3();
+	if (level == 1) 
+	{ 
+		level1code();
+	}
+	if (level == 2)
+	{
+
+	}
+	if (level == 3)
+	{
+
+	}
 
 	PlayerControl();
 
@@ -78,7 +87,6 @@ void CMyGame::CarControl()
 		potatoes.SetPosition(7000, 7000);
 		tomatoes.SetPosition(7000, 7000);
 	}
-
 }
 
 void CMyGame::OnDraw(CGraphics* g)
@@ -113,15 +121,16 @@ void CMyGame::OnDraw(CGraphics* g)
 
 	if (level == 1)
 	{
-		SetupLevel1();
-		// reset background image (which is of size 1080x10000)
-		if (bgscroller.GetY() < 0)
-			bgscroller.SetY(GetWidth() / 2);
 		bgscroller.Draw(g);
+	}
+	if (level == 2)
+	{
 
 	}
-	if (level == 2) SetupLevel2();
-	if (level == 3) SetupLevel3();
+	if (level == 3)
+	{
+
+	}
 
 	player.Draw(g);
 }
@@ -199,14 +208,17 @@ void CMyGame::OnStartLevel(Sint16 nLevel)
 void CMyGame::SetupLevel1()
 {
 }
+
 void CMyGame::SetupLevel2()
 {
 
 }
+
 void CMyGame::SetupLevel3()
 {
 
 }
+
 // called when the game is over
 void CMyGame::OnGameOver()
 {
@@ -248,14 +260,17 @@ void CMyGame::OnLButtonDown(Uint16 x,Uint16 y)
 	{
 		player.SetPosition(GetWidth() / 2, GetHeight() / 2);
 		level = 1;
+		SetupLevel1();
 	}
 	if (potatoes.HitTest(mousetoscreen(x, y)))
 	{
 		level = 2;
+		SetupLevel2();
 	}
 	if (tomatoes.HitTest(mousetoscreen(x, y)))
 	{
 		level = 3;
+		SetupLevel3();
 	}
 }
 
@@ -289,4 +304,12 @@ CVector CMyGame::mousetoscreen(float x, float y)
 	CVector cornerscreen = CVector(player.GetX() - (GetWidth() / 2), player.GetY() - (GetHeight() / 2));
 	mousepos = cornerscreen + mousepos;
 	return mousepos;
+}
+
+void CMyGame::level1code()
+{
+	if (bgscroller.GetY() < 0)
+		bgscroller.SetY(GetWidth() / 2);
+
+	bgscroller.SetMotion(0, -100);
 }
