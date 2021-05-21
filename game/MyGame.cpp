@@ -122,10 +122,9 @@ void CMyGame::CarControl()
 {
 	if (player.HitTest(&car) && IsKeyDown(SDLK_t))
 	{
-		carMenu.SetPosition(800, GetHeight() / 2);
-		carrots.SetPosition(650, 320);
-		potatoes.SetPosition(800, 320);
-		tomatoes.SetPosition(950, 320);
+		carMenu.SetPosition(800, 800);
+		carrots.SetPosition(750, 780);
+		potatoes.SetPosition(900, 780);
 
 	}
 	if (!player.HitTest(&car))
