@@ -364,6 +364,7 @@ void CMyGame::OnStartLevel(Sint16 nLevel)
 // called at the beginning of level
 void CMyGame::SetupLevel1()
 {
+	BGM.Play("Liyue.wav");
 	SFX.Play("Portal.wav");
 }
 
@@ -562,6 +563,7 @@ void CMyGame::level1code()
 		carrotscore++;
 		level = 0;
 		SFX.Play("Portal.wav");
+		BGM.Play("back to farming.wav");
 	}
 
 	bgscroller.SetMotion(0, -200);
