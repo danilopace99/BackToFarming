@@ -37,7 +37,8 @@ class CMyGame : public CGame
 	
 	void dirtcode(CDirt* patch);
 	void dirtinteract(CDirt* patch);
-	bool checkhitallfarms();
+	int checkhitallfarms();
+	CDirt* noToFarm(int no);
 
 	//functions
 	CVector mousetoscreen(float x, float y);

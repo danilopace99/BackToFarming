@@ -234,10 +234,21 @@ void CMyGame::OnDraw(CGraphics* g)
 		*g << xy(center2.GetX() - 180, center2.GetY() + 70) << color(CColor::Blue()) << font(15) << "Collected carrots: " << carrotscore;
 		*g << xy(center2.GetX() - 180, center2.GetY() + 50) << color(CColor::Blue()) << font(15) << "Collected potatoes: " << potatoammount;
 
-		if (checkhitallfarms())
+		int farm = checkhitallfarms();
+		if (farm > 0)
 		{
 			CVector center = CVector(player.GetX(), player.GetY() + 64);
-			*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Press E to interact";
+			if (noToFarm(farm)->hasPlant())
+			{
+				if (noToFarm(farm)->getPlantGrowthPercent() > 1)
+				{
+					*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Press E to harvest";
+				}
+				else
+				{
+					*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "This plant is not yet ready for harvest";
+				}
+			}
 		}
 	}
 
@@ -420,67 +431,12 @@ void CMyGame::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
 			patch9.waterPlant();
 		}
 
-		if (player.HitTest(&patch1))
+		int farm = checkhitallfarms();
+		if (farm > 0)
 		{
 			if (sym == SDLK_e)
 			{
-				dirtinteract(&patch1);
-			}
-		}
-		if (player.HitTest(&patch2))
-		{
-			if (sym == SDLK_e)
-			{
-				dirtinteract(&patch2);
-			}
-		}
-		if (player.HitTest(&patch3))
-		{
-			if (sym == SDLK_e)
-			{
-				dirtinteract(&patch3);
-			}
-		}
-		if (player.HitTest(&patch4))
-		{
-			if (sym == SDLK_e)
-			{
-				dirtinteract(&patch4);
-			}
-		}
-		if (player.HitTest(&patch5))
-		{
-			if (sym == SDLK_e)
-			{
-				dirtinteract(&patch5);
-			}
-		}
-		if (player.HitTest(&patch6))
-		{
-			if (sym == SDLK_e)
-			{
-				dirtinteract(&patch6);
-			}
-		}
-		if (player.HitTest(&patch7))
-		{
-			if (sym == SDLK_e)
-			{
-				dirtinteract(&patch7);
-			}
-		}
-		if (player.HitTest(&patch8))
-		{
-			if (sym == SDLK_e)
-			{
-				dirtinteract(&patch8);
-			}
-		}
-		if (player.HitTest(&patch9))
-		{
-			if (sym == SDLK_e)
-			{
-				dirtinteract(&patch9);
+				dirtinteract(noToFarm(farm));
 			}
 		}
 	}
@@ -603,44 +559,44 @@ void CMyGame::dirtcode(CDirt* patch)
 	patch->eachframe();
 }
 
-bool CMyGame::checkhitallfarms()
+int CMyGame::checkhitallfarms()
 {
-	bool hit = 0;
+	int hit = 0;
 	if (player.HitTest(&patch1))
 	{
 		hit = 1;
 	}
 	if (player.HitTest(&patch2))
 	{
-		hit = 1;
+		hit = 2;
 	}
 	if (player.HitTest(&patch3))
 	{
-		hit = 1;
+		hit = 3;
 	}
 	if (player.HitTest(&patch4))
 	{
-		hit = 1;
+		hit = 4;
 	}
 	if (player.HitTest(&patch5))
 	{
-		hit = 1;
+		hit = 5;
 	}
 	if (player.HitTest(&patch6))
 	{
-		hit = 1;
+		hit = 6;
 	}
 	if (player.HitTest(&patch7))
 	{
-		hit = 1;
+		hit = 7;
 	}
 	if (player.HitTest(&patch8))
 	{
-		hit = 1;
+		hit = 8;
 	}
 	if (player.HitTest(&patch9))
 	{
-		hit = 1;
+		hit = 9;
 	}
 	return hit;
 }
@@ -666,5 +622,45 @@ void CMyGame::dirtinteract(CDirt* patch)
 	else if (!patch->hasPlant())
 	{
 
+	}
+}
+
+CDirt* CMyGame::noToFarm(int no)
+{
+	if (no == 1)
+	{
+		return &patch1;
+	}
+	else if (no == 2)
+	{
+		return &patch2;
+	}
+	else if (no == 3)
+	{
+		return &patch3;
+	}
+	else if (no == 4)
+	{
+		return &patch4;
+	}
+	else if (no == 5)
+	{
+		return &patch5;
+	}
+	else if (no == 6)
+	{
+		return &patch6;
+	}
+	else if (no == 7)
+	{
+		return &patch7;
+	}
+	else if (no == 8)
+	{
+		return &patch8;
+	}
+	else if (no == 9)
+	{
+		return &patch9;
 	}
 }
