@@ -25,6 +25,8 @@ void CMyGame::OnUpdate()
 	
 	bg.Update(t);
 	bgscroller.Update(t);
+	for (CSprite* enemy : m_sprites)
+		enemy->Update(t);
 
 
 	if (level == 1) 
@@ -63,11 +65,17 @@ void CMyGame::PlayerControl()
 	}
 	else if (IsKeyDown(SDLK_UP) || IsKeyDown(SDLK_w))
 	{
-		player.SetMotion(0, 400);
+		if (level != 1)
+		{
+			player.SetMotion(0, -400);
+		}
 	}
 	else if (IsKeyDown(SDLK_DOWN) || IsKeyDown(SDLK_s))
 	{
-		player.SetMotion(0, -400);
+		if (level != 1)
+		{
+			player.SetMotion(0, -400);
+		}
 	}
 	else
 	{
@@ -172,6 +180,12 @@ void CMyGame::OnDraw(CGraphics* g)
 		carrots.Draw(g);
 		potatoes.Draw(g);
 		tomatoes.Draw(g);
+
+		CVector center2 = mousetoscreen(850, 50);
+		CSpriteRect d(center2.GetX(), center2.GetY(), 400, 200, CColor::White(), CColor::Black(), GetTime());
+		d.Draw(g);
+		*g << xy(center2.GetX() - 180, center2.GetY() + 70) << color(CColor::Blue()) << font(15) << "Collected carrots: " << carrotscore;
+		*g << xy(center2.GetX() - 180, center2.GetY() + 50) << color(CColor::Blue()) << font(15) << "Collected potatoes: " << potatoscore;
 	}
 
 	if (level == 1)
@@ -251,7 +265,7 @@ void CMyGame::OnInitialize()
 	bgscroller.LoadImage("bg1.png");
 	bgscroller.SetImage("bg1.png");
 
-
+	carrotscore = 0;
 	potatoscore = 0;
 }
 
@@ -400,23 +414,28 @@ void CMyGame::level1code()
 		}
 		bgscroller.SetPosition(540, 4830);
 		player.SetPosition(GetWidth() / 2, GetHeight() / 2);
+		carrotscore = carrotscore + 5;
 		level = 0;
 	}
 
-	bgscroller.SetMotion(0, -100);
+	bgscroller.SetMotion(0, -200);
 
 	// enemy spawn from the right side   
-	if (rand() % 80 == 0) {
+	if (rand() % 40 == 0) {
 		CSprite* newSprite = new CSprite(float(rand() % 1080), 768, "obstacle.png", CColor::White(), GetTime());
 		newSprite->SetDirection(0, -100.f);
-		newSprite->SetSpeed(75);
+		newSprite->SetSpeed(200);
 		m_sprites.push_back(newSprite);
 	}
 
 	for (CSprite* enemy : m_sprites)
 	{
 		// collision with player
-		if (enemy->HitTest(&player)) {
+		if (enemy->HitTest(&player))
+		{
+			bgscroller.SetPosition(540, 4830);
+			player.SetPosition(GetWidth() / 2, GetHeight() / 2);
+			level = 0;
 			enemy->Delete();
 		}
 	}

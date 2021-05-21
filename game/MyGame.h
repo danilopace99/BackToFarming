@@ -27,6 +27,8 @@ class CMyGame : public CGame
 	void level1code();
 
 
+	//lv1 stuff
+	int carrotscore;
 
 	//lv2 stuff
 	int potatoscore;
