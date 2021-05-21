@@ -10,6 +10,7 @@ class CMyGame : public CGame
 	CSprite player;
 	CSprite doctor;
 	CSprite console;
+	CSprite menu;
 
 	CSprite car;
 	CSprite carMenu;

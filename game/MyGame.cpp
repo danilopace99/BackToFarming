@@ -23,7 +23,7 @@ void CMyGame::OnUpdate()
 
 	// TODO: add the game update code here
 
-	
+	menu.Update(t);
 	bg.Update(t);
 	bgscroller.Update(t);
 	for (CSprite* enemy : m_sprites)
@@ -278,6 +278,11 @@ void CMyGame::OnDraw(CGraphics* g)
 		CVector center = mousetoscreen(GetWidth() * 0.1, GetHeight() * 0.9);
 		*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Collected potates: " << potatoscore;
 	}
+
+	if (IsMenuMode())
+	{
+		menu.Draw(g);
+	}
 }
 
 /////////////////////////////////////////////////////
@@ -286,6 +291,10 @@ void CMyGame::OnDraw(CGraphics* g)
 // one time initialisation
 void CMyGame::OnInitialize()
 {
+	menu.LoadImage("menu.png");
+	menu.SetImage("menu.png");
+	menu.SetPosition(GetWidth() / 2, GetHeight() / 2);
+
 	//player setup
 	player.LoadImage("pg.png");
 	player.SetImage("pg.png");
@@ -368,7 +377,6 @@ void CMyGame::OnInitialize()
 void CMyGame::OnDisplayMenu()
 {
 	BGM.Play("back to farming.wav");
-	StartGame();	// exits the menu mode and starts the game mode
 }
 
 // called when a new game is started
@@ -437,6 +445,14 @@ void CMyGame::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
 		PauseGame();
 	if (sym == SDLK_F2)
 		NewGame();
+
+	if (IsMenuMode())
+	{
+		if (sym == SDLK_F5)
+		{
+			StartGame();	// exits the menu mode and starts the game mode
+		}
+	}
 
 	if (level == 0)
 	{
