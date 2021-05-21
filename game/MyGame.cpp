@@ -184,6 +184,10 @@ void CMyGame::OnDraw(CGraphics* g)
 		{
 			back->Draw(g);
 		}
+		for (CSprite* potato : lv2potatolist)
+		{
+			potato->Draw(g);
+		}
 	}
 	if (level == 3)
 	{
@@ -192,8 +196,11 @@ void CMyGame::OnDraw(CGraphics* g)
 
 	player.Draw(g);
 
-	CVector center = mousetoscreen(GetWidth() * 0.35, GetHeight() * 0.5);
-	*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(50) << level << " " << player.GetX() << " " << player.GetY();
+	if (level == 2)
+	{
+		CVector center = mousetoscreen(GetWidth() * 0.1, GetHeight() * 0.9);
+		*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Collected potates: " << potatoscore;
+	}
 }
 
 /////////////////////////////////////////////////////
@@ -243,6 +250,8 @@ void CMyGame::OnInitialize()
 	bgscroller.LoadImage("bg1.png");
 	bgscroller.SetImage("bg1.png");
 
+
+	potatoscore = 0;
 }
 
 // called when a new game is requested (e.g. when F2 pressed)
@@ -284,6 +293,8 @@ void CMyGame::SetupLevel1()
 void CMyGame::SetupLevel2()
 {
 	createbacks();
+	potatoscore = 0;
+	player.SetPos(GetWidth() / 2, GetHeight() / 2);
 }
 
 void CMyGame::SetupLevel3()
@@ -572,9 +583,116 @@ void CMyGame::createbacks()
 
 void CMyGame::level2code()
 {
-	backcode();
 	for (CSprite* back : backlist)
 	{
 		back->Update(GetTime());
+	}
+	for (CSprite* potato : lv2potatolist)
+	{
+		potato->Update(GetTime());
+	}
+	backcode();
+
+	lv2potatospawn();
+
+	for (CSprite* potato : lv2potatolist)
+	{
+		if (player.HitTest(potato))
+		{
+			potatoscore++;
+			potato->Delete();
+		}
+		if (Distance(potato->GetPos(), player.GetPos()) > 1280)
+		{
+			potato->Delete();
+		}
+	}
+
+	if (potatoscore >= 5)
+	{
+		lv2end();
+	}
+
+	lv2potatolist.delete_if(deleted);
+}
+
+void CMyGame::lv2end()
+{
+	backlist.delete_all();
+	lv2potatolist.delete_all();
+	level = 0;
+	potatoscore = 0;
+	player.SetPos(GetWidth() / 2, GetHeight() / 2);
+}
+
+void CMyGame::lv2potatospawn()
+{
+	if (lv2potatolist.size() < 2)
+	{
+		//moving left and right
+		if (player.GetYVelocity() == 0)
+		{
+			//doing nothing
+			if (player.GetXVelocity() == 0)
+			{
+				//no spawn
+			}
+			//moving right
+			else if (player.GetXVelocity() > 0)
+			{
+				CVector spawnpos = mousetoscreen(GetWidth() + (rand() % 100 + 32), rand() % GetHeight());
+				subpotatospawning(spawnpos);
+			}
+			//moving left
+			else if (player.GetXVelocity() < 0)
+			{
+				CVector spawnpos = mousetoscreen(-(rand() % 100 + 32), rand() % GetHeight());
+				subpotatospawning(spawnpos);
+			}
+		}
+		//moving up and down
+		else if (player.GetXVelocity() == 0)
+		{
+			//doing nothing
+			if (player.GetYVelocity() == 0)
+			{
+				//no spawn
+			}
+			// moving up
+			else if (player.GetYVelocity() > 0)
+			{
+				CVector spawnpos = mousetoscreen(rand() % GetWidth(), GetHeight() + (rand() % 100 + 32));
+				subpotatospawning(spawnpos);
+			}
+			//moving down
+			else if (player.GetYVelocity() < 0)
+			{
+				CVector spawnpos = mousetoscreen(rand() % GetWidth(), -(rand() % 100 + 32));
+				subpotatospawning(spawnpos);
+			}
+		}
+	}
+}
+
+void CMyGame::subpotatospawning(CVector spawnpoint)
+{
+	if (lv2potatolist.size() > 0)
+	{
+		for (CSprite* potatoo : lv2potatolist)
+		{
+			//check for colision
+			if (Distance(potatoo->GetPos(), spawnpoint) > 150)
+			{
+				//if no collision spawn potato
+				CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potatoimg.bmp", CColor::Black(), GetTime());
+				lv2potatolist.push_back(potato);
+			}
+		}
+	}
+	else
+	{
+		//spawn potato
+		CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potatoimg.bmp", CColor::Black(), GetTime());
+		lv2potatolist.push_back(potato);
 	}
 }

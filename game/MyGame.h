@@ -9,7 +9,6 @@ class CMyGame : public CGame
 	CSprite player;
 	CSprite doctor;
 	CSprite console;
-	CSpriteList backlist; //lv2 backgrounds
 
 	CSprite car;
 	CSprite carMenu;
@@ -27,9 +26,20 @@ class CMyGame : public CGame
 	
 	void level1code();
 
+
+
+	//lv2 stuff
+	int potatoscore;
+
+	CSpriteList backlist; //lv2 backgrounds
+	CSpriteList lv2potatolist;
+
 	void level2code();
 	void backcode();
 	void createbacks();
+	void lv2end();
+	void lv2potatospawn();
+	void subpotatospawning(CVector spawnpoint);
 
 public:
 	CMyGame(void);
