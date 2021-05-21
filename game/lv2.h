@@ -258,7 +258,7 @@ void CMyGame::subpotatospawning(CVector spawnpoint)
 			if (Distance(potatoo->GetPos(), spawnpoint) > 150)
 			{
 				//if no collision spawn potato
-				CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potatoimg.bmp", CColor::Black(), GetTime());
+				CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potato.jpg", CColor::Black(), GetTime());
 				lv2potatolist.push_back(potato);
 			}
 		}
@@ -266,7 +266,7 @@ void CMyGame::subpotatospawning(CVector spawnpoint)
 	else
 	{
 		//spawn potato
-		CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potatoimg.bmp", CColor::Black(), GetTime());
+		CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potato.jpg", CColor::Black(), GetTime());
 		lv2potatolist.push_back(potato);
 	}
 }

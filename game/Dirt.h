@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Plant.h"
+#include "MyGame.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ public:
 		{
 			agePlant();
 		}
+		setImgRight();
 	}
 
 	void agePlant()
@@ -37,10 +39,49 @@ public:
 		plant = Nplant;
 	}
 
-	void harvestPlant()
+	int harvestPlant()
 	{
+		if (plant != NULL)
+		{
+			if (plant->getPercentDone() > 1)
+			{
+				int rtn;
+				if (plant->getType() == "carrots")
+				{
+					rtn = 1;
+				}
+				else if (plant->getType() == "potatoes")
+				{
+					rtn = 2;
+				}
+				plant = NULL;
+				return rtn;
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
-		plant = NULL;
+	void setImgRight()
+	{
+		if (plant == NULL)
+		{
+			SetImage("feild1.jpg");
+		}
+		else if (plant->getPercentDone() < 0.4)
+		{
+			SetImage("feild2.jpg");
+		}
+		else if (plant->getPercentDone() < 1)
+		{
+			SetImage("feild3.jpg");
+		}
+		else if (plant->getPercentDone() > 1)
+		{
+			SetImage("feild4.jpg");
+		}
 	}
 
 	//setters
