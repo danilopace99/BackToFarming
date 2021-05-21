@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dirt.h" />
+    <ClInclude Include="lv2.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="stdafx.h" />

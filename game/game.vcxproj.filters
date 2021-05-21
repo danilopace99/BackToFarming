@@ -35,5 +35,8 @@
     <ClInclude Include="Dirt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lv2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
