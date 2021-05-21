@@ -401,6 +401,86 @@ void CMyGame::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
 		PauseGame();
 	if (sym == SDLK_F2)
 		NewGame();
+
+	if (level == 0)
+	{
+		if (player.HitTest(&console) && sym == SDLK_t)
+		{
+			patch1.waterPlant();
+			patch2.waterPlant();
+			patch3.waterPlant();
+			patch4.waterPlant();
+			patch5.waterPlant();
+			patch6.waterPlant();
+			patch7.waterPlant();
+			patch8.waterPlant();
+			patch9.waterPlant();
+		}
+
+		if (player.HitTest(&patch1))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch1);
+			}
+		}
+		if (player.HitTest(&patch2))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch2);
+			}
+		}
+		if (player.HitTest(&patch3))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch3);
+			}
+		}
+		if (player.HitTest(&patch4))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch4);
+			}
+		}
+		if (player.HitTest(&patch5))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch5);
+			}
+		}
+		if (player.HitTest(&patch6))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch6);
+			}
+		}
+		if (player.HitTest(&patch7))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch7);
+			}
+		}
+		if (player.HitTest(&patch8))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch8);
+			}
+		}
+		if (player.HitTest(&patch9))
+		{
+			if (sym == SDLK_e)
+			{
+				dirtinteract(&patch9);
+			}
+		}
+	}
 }
 
 void CMyGame::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
@@ -477,7 +557,7 @@ void CMyGame::level1code()
 		}
 		bgscroller.SetPosition(540, 4830);
 		player.SetPosition(GetWidth() / 2, GetHeight() / 2);
-		carrotscore = carrotscore + 5;
+		carrotscore++;
 		level = 0;
 	}
 
@@ -558,4 +638,26 @@ bool CMyGame::checkhitallfarms()
 		hit = 1;
 	}
 	return hit;
+}
+
+void CMyGame::dirtinteract(CDirt* patch)
+{
+	if (patch->hasPlant())
+	{
+		if (patch->getPlantGrowthPercent() > 1)
+		{
+			if (patch->harvestPlant() == 1)
+			{
+				carrotscore += 3;
+			}
+			else if (patch->harvestPlant() == 2)
+			{
+				potatoammount += 3;
+			}
+		}
+	}
+	else if (!patch->hasPlant())
+	{
+
+	}
 }

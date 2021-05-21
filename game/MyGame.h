@@ -32,7 +32,7 @@ class CMyGame : public CGame
 	CDirt patch9;
 	
 	void dirtcode(CDirt* patch);
-
+	void dirtinteract(CDirt* patch);
 	bool checkhitallfarms();
 
 	//functions

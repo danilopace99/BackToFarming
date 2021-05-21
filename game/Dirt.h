@@ -115,4 +115,19 @@ public:
 	{
 		return plant;
 	}
+
+	float getPlantGrowthPercent()
+	{
+		return plant->getPercentDone();
+	}
+
+	bool hasPlant()
+	{
+		bool rtn = 0;
+		if (plant != NULL)
+		{
+			rtn = 1;
+		}
+		return rtn;
+	}
 };
