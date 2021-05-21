@@ -9,6 +9,7 @@ class CMyGame : public CGame
 	CSprite player;
 	CSprite doctor;
 	CSprite console;
+	CSpriteList backlist; //lv2 backgrounds
 
 	CSprite car;
 	CSprite carMenu;
@@ -25,6 +26,10 @@ class CMyGame : public CGame
 	CVector mousetoscreen(float x, float y);
 	
 	void level1code();
+
+	void level2code();
+	void backcode();
+	void createbacks();
 
 public:
 	CMyGame(void);
