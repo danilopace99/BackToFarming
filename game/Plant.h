@@ -1,8 +1,6 @@
 #pragma once
 #include "stdafx.h"
 
-using namespace std;
-
 class Cplant
 {
 protected:
@@ -66,15 +64,3 @@ public:
 		return growTime / complteteGrowTime;
 	}
 };
-
-int getCompleteGrowtime(string type)
-{
-	if (type == "carrots")
-	{
-		return 2400;
-	}
-	else if (type == "potatoes")
-	{
-		return 4800;
-	}
-}

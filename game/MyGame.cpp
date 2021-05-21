@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "MyGame.h"
 #include "lv2.h"
+#include "Dirt.h"
 
 CMyGame::CMyGame(void)
 	// to initialise more sprites here use a comma-separated list
@@ -27,6 +28,16 @@ void CMyGame::OnUpdate()
 	bgscroller.Update(t);
 	for (CSprite* enemy : m_sprites)
 		enemy->Update(t);
+
+	dirtcode(&patch1);
+	dirtcode(&patch2);
+	dirtcode(&patch3);
+	dirtcode(&patch4);
+	dirtcode(&patch5);
+	dirtcode(&patch6);
+	dirtcode(&patch7);
+	dirtcode(&patch8);
+	dirtcode(&patch9);
 
 
 	if (level == 1) 
@@ -171,6 +182,16 @@ void CMyGame::OnDraw(CGraphics* g)
 	{
 		bg.Draw(g);
 
+		patch1.Draw(g);
+		patch2.Draw(g);
+		patch3.Draw(g);
+		patch4.Draw(g);
+		patch5.Draw(g);
+		patch6.Draw(g);
+		patch7.Draw(g);
+		patch8.Draw(g);
+		patch9.Draw(g);
+
 		car.Draw(g);
 
 		doctor.Draw(g);
@@ -212,6 +233,12 @@ void CMyGame::OnDraw(CGraphics* g)
 		d.Draw(g);
 		*g << xy(center2.GetX() - 180, center2.GetY() + 70) << color(CColor::Blue()) << font(15) << "Collected carrots: " << carrotscore;
 		*g << xy(center2.GetX() - 180, center2.GetY() + 50) << color(CColor::Blue()) << font(15) << "Collected potatoes: " << potatoammount;
+
+		if (checkhitallfarms())
+		{
+			CVector center = CVector(player.GetX(), player.GetY() + 64);
+			*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Press E to interact";
+		}
 	}
 
 	if (level == 2)
@@ -219,6 +246,9 @@ void CMyGame::OnDraw(CGraphics* g)
 		CVector center = mousetoscreen(GetWidth() * 0.1, GetHeight() * 0.9);
 		*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Collected potates: " << potatoscore;
 	}
+
+	CVector center = mousetoscreen(GetWidth() * 0.1, GetHeight() * 0.9);
+	*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << player.GetX() << " " << player.GetY();
 }
 
 /////////////////////////////////////////////////////
@@ -271,6 +301,35 @@ void CMyGame::OnInitialize()
 	carrotscore = 0;
 	potatoscore = 0;
 	potatoammount = 0;
+
+	int space = 128;
+	int x1 = 340;
+	int x2 = x1 + space;
+	int x3 = x1 + (space * 2);
+	int y1 = 500;
+	int y2 = y1 - space;
+	int y3 = y1 - (space * 2);
+
+	patch1.SetPos(x1, y1);
+	patch1.setUpDirt();
+	patch2.SetPos(x2, y1);
+	patch2.setUpDirt();
+	patch3.SetPos(x3, y1);
+	patch3.setUpDirt();
+
+	patch4.SetPos(x1, y2);
+	patch4.setUpDirt();
+	patch5.SetPos(x2, y2);
+	patch5.setUpDirt();
+	patch6.SetPos(x3, y2);
+	patch6.setUpDirt();
+
+	patch7.SetPos(x1, y3);
+	patch7.setUpDirt();
+	patch8.SetPos(x2, y3);
+	patch8.setUpDirt();
+	patch9.SetPos(x3, y3);
+	patch9.setUpDirt();
 }
 
 // called when a new game is requested (e.g. when F2 pressed)
@@ -451,4 +510,52 @@ void CMyGame::level1code()
 			enemy->Delete();
 		}
 	}
+}
+
+void CMyGame::dirtcode(CDirt* patch)
+{
+	patch->Update(GetTime());
+	patch->eachframe();
+}
+
+bool CMyGame::checkhitallfarms()
+{
+	bool hit = 0;
+	if (player.HitTest(&patch1))
+	{
+		hit = 1;
+	}
+	if (player.HitTest(&patch2))
+	{
+		hit = 1;
+	}
+	if (player.HitTest(&patch3))
+	{
+		hit = 1;
+	}
+	if (player.HitTest(&patch4))
+	{
+		hit = 1;
+	}
+	if (player.HitTest(&patch5))
+	{
+		hit = 1;
+	}
+	if (player.HitTest(&patch6))
+	{
+		hit = 1;
+	}
+	if (player.HitTest(&patch7))
+	{
+		hit = 1;
+	}
+	if (player.HitTest(&patch8))
+	{
+		hit = 1;
+	}
+	if (player.HitTest(&patch9))
+	{
+		hit = 1;
+	}
+	return hit;
 }

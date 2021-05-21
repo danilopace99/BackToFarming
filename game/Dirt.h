@@ -3,14 +3,34 @@
 #include "Plant.h"
 #include "MyGame.h"
 
-using namespace std;
-
 class CDirt : public CSprite
 {
 protected:
 	Cplant* plant;
 
 public:
+
+	int getCompleteGrowTimeForType(string type)
+	{
+		if (type == "carrots")
+		{
+			return 2400;
+		}
+		else if (type == "potatoes")
+		{
+			return 4800;
+		}
+	}
+
+	void setUpDirt()
+	{
+		plant = NULL;
+		LoadImage("feild1.jpg");
+		SetImage("feild1.jpg");
+		LoadImage("feild2.jpg");
+		LoadImage("feild3.jpg");
+		LoadImage("feild4.jpg");
+	}
 
 	//methods
 	void eachframe()
@@ -35,7 +55,7 @@ public:
 
 	void plantPlant(string type)
 	{
-		Cplant* Nplant = new Cplant(type, 0, getCompleteGrowtime(type), 1800);
+		Cplant* Nplant = new Cplant(type, 0, getCompleteGrowTimeForType(type), 1800);
 		plant = Nplant;
 	}
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "Dirt.h"
 
 class CMyGame : public CGame
 {
@@ -19,7 +20,20 @@ class CMyGame : public CGame
 
 	CSpriteList m_sprites;	// All other sprites
 
+	//dirt stuff
+	CDirt patch1;
+	CDirt patch2;
+	CDirt patch3;
+	CDirt patch4;
+	CDirt patch5;
+	CDirt patch6;
+	CDirt patch7;
+	CDirt patch8;
+	CDirt patch9;
 	
+	void dirtcode(CDirt* patch);
+
+	bool checkhitallfarms();
 
 	//functions
 	CVector mousetoscreen(float x, float y);
