@@ -290,6 +290,8 @@ void CMyGame::OnInitialize()
 	player.LoadImage("pg.png");
 	player.SetImage("pg.png");
 	player.SetPosition(GetWidth() / 2, GetHeight() / 2);
+	player.AddImage("spritesheet_17.png", "flying", 3, 1, 0, 0, 2, 0, CColor::Black());
+	player.SetAnimation("flying");
 
 	//background setup
 	bg.LoadImage("bg.jpg");
