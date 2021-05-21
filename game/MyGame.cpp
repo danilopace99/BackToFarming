@@ -478,7 +478,7 @@ void CMyGame::OnLButtonDown(Uint16 x,Uint16 y)
 {
 	if (carrots.HitTest(mousetoscreen(x, y)))
 	{
-		player.SetPosition(GetWidth() / 2, GetHeight() / 2);
+		player.SetPosition(533, GetHeight() / 2);
 		level = 1;
 		SetupLevel1();
 	}
@@ -539,14 +539,13 @@ void CMyGame::level1code()
 		carrotscore++;
 		level = 0;
 		SFX.Play("Portal.wav");
-		BGM.Play("back to farming.wav");
 	}
 
 	bgscroller.SetMotion(0, -200);
 
 	// enemy spawn from the right side   
 	if (rand() % 70 == 0) {
-		CSprite* newSprite = new CSprite(float(rand() % 1080), 900, "obstacle.bmp", CColor::White(), GetTime());
+		CSprite* newSprite = new CSprite(float((100) + rand() % 900), 900, "obstacle.bmp", CColor::White(), GetTime());
 		newSprite->SetDirection(0, -100.f);
 		newSprite->SetSpeed(200);
 		m_sprites.push_back(newSprite);
@@ -566,7 +565,7 @@ void CMyGame::level1code()
 
 	for (CSprite* enemy : m_sprites)
 	{
-		if (enemy->GetY() < 0 || enemy->GetX() < 0)
+		if (enemy->GetY() < -200 || enemy->GetX() < 0)
 		{
 			enemy->Delete();
 		}
