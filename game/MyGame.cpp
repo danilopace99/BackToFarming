@@ -260,8 +260,8 @@ void CMyGame::OnInitialize()
 	player.SetPosition(GetWidth() / 2, GetHeight() / 2);
 
 	//background setup
-	bg.LoadImage("bg.png");
-	bg.SetImage("bg.png");
+	bg.LoadImage("bg.jpg");
+	bg.SetImage("bg.jpg");
 	bg.SetPosition(GetWidth() / 2, GetHeight() / 2);
 
 	//setup
