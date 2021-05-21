@@ -196,6 +196,7 @@ void CMyGame::lv2end()
 	level = 0;
 	potatoscore = 0;
 	player.SetPos(GetWidth() / 2, GetHeight() / 2);
+	potatoammount++;
 }
 
 void CMyGame::lv2potatospawn()

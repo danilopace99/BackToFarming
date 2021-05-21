@@ -30,6 +30,7 @@ class CMyGame : public CGame
 	//lv1 stuff
 	int carrotscore;
 
+	int potatoammount;
 	//lv2 stuff
 	int potatoscore;
 

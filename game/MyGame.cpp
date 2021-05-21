@@ -67,7 +67,7 @@ void CMyGame::PlayerControl()
 	{
 		if (level != 1)
 		{
-			player.SetMotion(0, -400);
+			player.SetMotion(0, 400);
 		}
 	}
 	else if (IsKeyDown(SDLK_DOWN) || IsKeyDown(SDLK_s))
@@ -185,7 +185,7 @@ void CMyGame::OnDraw(CGraphics* g)
 		CSpriteRect d(center2.GetX(), center2.GetY(), 400, 200, CColor::White(), CColor::Black(), GetTime());
 		d.Draw(g);
 		*g << xy(center2.GetX() - 180, center2.GetY() + 70) << color(CColor::Blue()) << font(15) << "Collected carrots: " << carrotscore;
-		*g << xy(center2.GetX() - 180, center2.GetY() + 50) << color(CColor::Blue()) << font(15) << "Collected potatoes: " << potatoscore;
+		*g << xy(center2.GetX() - 180, center2.GetY() + 50) << color(CColor::Blue()) << font(15) << "Collected potatoes: " << potatoammount;
 	}
 
 	if (level == 1)
@@ -267,6 +267,7 @@ void CMyGame::OnInitialize()
 
 	carrotscore = 0;
 	potatoscore = 0;
+	potatoammount = 0;
 }
 
 // called when a new game is requested (e.g. when F2 pressed)
