@@ -249,6 +249,22 @@ void CMyGame::OnDraw(CGraphics* g)
 					*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "This plant is not yet ready for harvest";
 				}
 			}
+
+			if (!noToFarm(farm)->hasPlant())
+			{
+				if (carrotscore <= 0 && potatoammount <= 0)
+				{
+
+				}
+				else if (carrotscore > 0 && potatoammount <= 0)
+				{
+					*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Press E to plant carrots";
+				}
+				else if (carrotscore <= 0 && potatoammount > 0)
+				{
+					*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Press F to plant potatoes";
+				}
+			}
 		}
 	}
 
@@ -436,7 +452,11 @@ void CMyGame::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
 		{
 			if (sym == SDLK_e)
 			{
-				dirtinteract(noToFarm(farm));
+				dirtinteract(noToFarm(farm), 1);
+			}
+			if (sym == SDLK_f)
+			{
+				dirtinteract(noToFarm(farm), 2);
 			}
 		}
 	}
@@ -601,27 +621,46 @@ int CMyGame::checkhitallfarms()
 	return hit;
 }
 
-void CMyGame::dirtinteract(CDirt* patch)
+void CMyGame::dirtinteract(CDirt* patch, int type)
 {
-	if (patch->hasPlant())
+	if (type == 1)
 	{
-		if (patch->getPlantGrowthPercent() > 1)
+		if (patch->hasPlant())
 		{
-			if (patch->harvestPlant() == 1)
+			if (patch->getPlantGrowthPercent() > 1)
 			{
-				carrotscore += 3;
-				SFX.Play("planting.wav");
-			}
-			else if (patch->harvestPlant() == 2)
-			{
-				potatoammount += 3;
-				SFX.Play("planting.wav");
+				if (patch->harvestPlant() == 1)
+				{
+					carrotscore += 3;
+					SFX.Play("planting.wav");
+				}
+				else if (patch->harvestPlant() == 2)
+				{
+					potatoammount += 3;
+					SFX.Play("planting.wav");
+				}
 			}
 		}
 	}
-	else if (!patch->hasPlant())
-	{
 
+	if (!patch->hasPlant())
+	{
+		if (type == 1)
+		{
+			if (carrotscore > 0)
+			{
+				carrotscore--;
+				patch->plantPlant("carrots");
+			}
+		}
+		if (type == 2)
+		{
+			if (potatoammount > 0)
+			{
+				potatoammount--;
+				patch->plantPlant("potatoes");
+			}
+		}
 	}
 }
 
