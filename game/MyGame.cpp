@@ -180,12 +180,6 @@ void CMyGame::OnDraw(CGraphics* g)
 		carrots.Draw(g);
 		potatoes.Draw(g);
 		tomatoes.Draw(g);
-
-		CVector center2 = mousetoscreen(850, 50);
-		CSpriteRect d(center2.GetX(), center2.GetY(), 400, 200, CColor::White(), CColor::Black(), GetTime());
-		d.Draw(g);
-		*g << xy(center2.GetX() - 180, center2.GetY() + 70) << color(CColor::Blue()) << font(15) << "Collected carrots: " << carrotscore;
-		*g << xy(center2.GetX() - 180, center2.GetY() + 50) << color(CColor::Blue()) << font(15) << "Collected potatoes: " << potatoammount;
 	}
 
 	if (level == 1)
@@ -210,6 +204,15 @@ void CMyGame::OnDraw(CGraphics* g)
 	}
 
 	player.Draw(g);
+
+	if (level == 0)
+	{
+		CVector center2 = mousetoscreen(850, 50);
+		CSpriteRect d(center2.GetX(), center2.GetY(), 400, 200, CColor::White(), CColor::Black(), GetTime());
+		d.Draw(g);
+		*g << xy(center2.GetX() - 180, center2.GetY() + 70) << color(CColor::Blue()) << font(15) << "Collected carrots: " << carrotscore;
+		*g << xy(center2.GetX() - 180, center2.GetY() + 50) << color(CColor::Blue()) << font(15) << "Collected potatoes: " << potatoammount;
+	}
 
 	if (level == 2)
 	{
