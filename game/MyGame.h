@@ -20,6 +20,10 @@ class CMyGame : public CGame
 
 	CSpriteList m_sprites;	// All other sprites
 
+	//sounds
+	CSoundPlayer BGM;
+	CSoundPlayer SFX;
+
 	//dirt stuff
 	CDirt patch1;
 	CDirt patch2;

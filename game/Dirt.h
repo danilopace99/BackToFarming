@@ -50,7 +50,10 @@ public:
 
 	void waterPlant()
 	{
-		plant->setAmmountWater(plant->getAmmountWater() + 1800);
+		if (plant != NULL)
+		{
+			plant->setAmmountWater(plant->getAmmountWater() + 1800);
+		}
 	}
 
 	void plantPlant(string type)

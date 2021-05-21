@@ -197,6 +197,8 @@ void CMyGame::lv2end()
 	potatoscore = 0;
 	player.SetPos(GetWidth() / 2, GetHeight() / 2);
 	potatoammount++;
+	BGM.Play("back to farming.wav");
+	SFX.Play("Portal.wav");
 }
 
 void CMyGame::lv2potatospawn()
@@ -258,7 +260,7 @@ void CMyGame::subpotatospawning(CVector spawnpoint)
 			if (Distance(potatoo->GetPos(), spawnpoint) > 150)
 			{
 				//if no collision spawn potato
-				CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potato.jpg", CColor::Black(), GetTime());
+				CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potato.png", CColor::Black(), GetTime());
 				lv2potatolist.push_back(potato);
 			}
 		}
@@ -266,7 +268,7 @@ void CMyGame::subpotatospawning(CVector spawnpoint)
 	else
 	{
 		//spawn potato
-		CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potato.jpg", CColor::Black(), GetTime());
+		CSprite* potato = new CSprite(spawnpoint.GetX(), spawnpoint.GetY(), "potato.png", CColor::Black(), GetTime());
 		lv2potatolist.push_back(potato);
 	}
 }

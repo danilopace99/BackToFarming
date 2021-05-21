@@ -246,9 +246,6 @@ void CMyGame::OnDraw(CGraphics* g)
 		CVector center = mousetoscreen(GetWidth() * 0.1, GetHeight() * 0.9);
 		*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Collected potates: " << potatoscore;
 	}
-
-	CVector center = mousetoscreen(GetWidth() * 0.1, GetHeight() * 0.9);
-	*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << player.GetX() << " " << player.GetY();
 }
 
 /////////////////////////////////////////////////////
@@ -336,6 +333,7 @@ void CMyGame::OnInitialize()
 // use this function to prepare a menu or a welcome screen
 void CMyGame::OnDisplayMenu()
 {
+	BGM.Play("back to farming.wav");
 	StartGame();	// exits the menu mode and starts the game mode
 }
 
@@ -366,6 +364,7 @@ void CMyGame::OnStartLevel(Sint16 nLevel)
 // called at the beginning of level
 void CMyGame::SetupLevel1()
 {
+	SFX.Play("Portal.wav");
 }
 
 void CMyGame::SetupLevel2()
@@ -373,6 +372,8 @@ void CMyGame::SetupLevel2()
 	createbacks();
 	potatoscore = 0;
 	player.SetPos(GetWidth() / 2, GetHeight() / 2);
+	BGM.Play("Liyue.wav");
+	SFX.Play("Portal.wav");
 }
 
 void CMyGame::SetupLevel3()
@@ -406,6 +407,7 @@ void CMyGame::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
 	{
 		if (player.HitTest(&console) && sym == SDLK_t)
 		{
+			SFX.Play("wadr.wav");
 			patch1.waterPlant();
 			patch2.waterPlant();
 			patch3.waterPlant();
@@ -559,6 +561,7 @@ void CMyGame::level1code()
 		player.SetPosition(GetWidth() / 2, GetHeight() / 2);
 		carrotscore++;
 		level = 0;
+		SFX.Play("Portal.wav");
 	}
 
 	bgscroller.SetMotion(0, -200);
@@ -649,10 +652,12 @@ void CMyGame::dirtinteract(CDirt* patch)
 			if (patch->harvestPlant() == 1)
 			{
 				carrotscore += 3;
+				SFX.Play("planting.wav");
 			}
 			else if (patch->harvestPlant() == 2)
 			{
 				potatoammount += 3;
+				SFX.Play("planting.wav");
 			}
 		}
 	}
