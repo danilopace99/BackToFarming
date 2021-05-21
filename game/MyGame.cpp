@@ -254,7 +254,7 @@ void CMyGame::OnDraw(CGraphics* g)
 			{
 				if (carrotscore <= 0 && potatoammount <= 0)
 				{
-
+					*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "You dont have any seeds";
 				}
 				else if (carrotscore > 0 && potatoammount <= 0)
 				{
@@ -262,6 +262,11 @@ void CMyGame::OnDraw(CGraphics* g)
 				}
 				else if (carrotscore <= 0 && potatoammount > 0)
 				{
+					*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Press F to plant potatoes";
+				}
+				else if (carrotscore > 0 && potatoammount > 0)
+				{
+					*g << xy(center.GetX(), center.GetY()+20) << color(CColor::Blue()) << font(30) << "Press E to plant carrots";
 					*g << xy(center.GetX(), center.GetY()) << color(CColor::Blue()) << font(30) << "Press F to plant potatoes";
 				}
 			}
