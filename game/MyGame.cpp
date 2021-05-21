@@ -567,8 +567,8 @@ void CMyGame::level1code()
 	bgscroller.SetMotion(0, -200);
 
 	// enemy spawn from the right side   
-	if (rand() % 40 == 0) {
-		CSprite* newSprite = new CSprite(float(rand() % 1080), 768, "obstacle.png", CColor::White(), GetTime());
+	if (rand() % 70 == 0) {
+		CSprite* newSprite = new CSprite(float(rand() % 1080), 900, "obstacle.bmp", CColor::White(), GetTime());
 		newSprite->SetDirection(0, -100.f);
 		newSprite->SetSpeed(200);
 		m_sprites.push_back(newSprite);
